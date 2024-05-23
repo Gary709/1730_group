@@ -1,0 +1,104 @@
+
+Individual report for the COMP1730/6730 project assignment S1 2022
+-------------------------------------------------------------------
+
+Question 1: Write your name and ANU ID
+
+Jingze He
+u7166705
+
+-------------------------------------------------------------------
+
+Question 2: If you are part of a group, write the ANU IDs of ALL
+members of this group. If you are doing the assignment on your own
+(not part of a group), just write "not part of a group".
+
+u7166705
+u7154495
+u7326008
+
+-------------------------------------------------------------------
+
+Question 3: Select a piece of code in your assignment solution that
+you have written, and explain:
+
+        # Dealing with situation if one country's info is not enough to predict
+        try:
+
+            # Calculating population using fully vaccinated proportion
+            population = float(detail[cols['people_fully_vaccinated']]) / \
+                         float(detail[cols['people_fully_vaccinated_per_hundred']]) * 100
+
+            # Calculating the rest population to achieve 80% fully vaccinated
+            rest_population = population * (80 - current_proportion) / 100
+
+            # Calculating the daily growth by average daily vaccinations subs daily first vaccinated
+            daily_growth = float(detail[cols['daily_vaccinations']]) - float(detail[cols['daily_people_vaccinated']])
+
+            # Deal with situation if growth is less or equal than 0
+            if daily_growth <= 0: rest_days = "infinite"
+            else: rest_days = int(rest_population / daily_growth) + 1
+
+            # Final output of Q(4)
+            print("{}: {}% population fully vaccinated, {} days to 80%".format(country, current_proportion, rest_days))
+        except TypeError:
+            print("{}: {}% population fully vaccinated, but unable to predict how many days to 80%, "
+                  "due to lack of information".format(country, current_proportion))
+
+(a) What does this piece of code do?
+
+This code is used to predict each of the ten countries found in Q4 (a). It predicts for each of these country that how
+many days they will take to reach 80% fully vaccinated rate.
+
+The assumption of this code is that we have found the ten countries mentioned, and we have found the corresponding
+meaningful latest data of these countries. Meaningful here means that the latest row of data found by the country has
+all the information we need. If we can't find that one, we throw an exception that we can't predict this country.
+
+Another limitation is that we may encounter a divisor of 0 when calculating the population and rest days. Our statistics
+show that the divisor used to calculate the population is not 0 for all countries, so we do not care. For rest days, we
+make the number of days equal to infinity when the divisor is 0.
+
+(b) How does it work?
+
+Equation:
+rest days = (p_goal - p_current) * n_population / n_growth
+
+where:
+	p_goal = 80%
+	p_current = calculated in Q4(a)
+	n_population = (n_people_fully_vaccinated / n_people_fully_vaccinated_per_hundred)%
+	n_growth = n_daily_vaccinations - n_daily_people_vaccinated
+
+Explanation:
+Basically we want to measure the current growth rate of total vaccination, which is obtained by subtracting the number
+of people vaccinated for the first shot from the total number of vaccinations per day. Both data can be obtained
+directly by reading the data.
+
+But we only have the rest proportion to 80%, not a real number, so we have to calculate the population of each country.
+We pick out two most common data, daily_vaccinations and daily_people_vaccinated, which an be divided and get the number
+of population.
+
+Finally we just divide the rest population to 80% by current growth number, we get the rest days to 80%.
+Notice that In order to meet the conditions of "at least 80%", we round the result down and add one.
+
+(c) What other possible ways did you consider to implement this
+functionality, and why did you choose the one you did?
+
+Alternative 1:
+We have considered when calculating the average daily growth, introduce the approximate value of booster shot(third
+shot) to make the average daily growth more accurate. So:
+
+	n_growth = n_daily_vaccinations - n_daily_people_vaccinated - n_daily_booster
+	n_daily_booster = n_total_boosters_today - n_total_boosters_yesterday
+
+But first, not every country has total_boosters, and second not every day we have this data. When calculating daily
+growth we have already use two 7-days-smoothing data, if we introduce such a sensitive non-smoothing data, the results
+might be less accurate.
+
+Alternative 2:
+We have also considered using a longer average data rather than 7-days-smoothing data, i.e. using 14 days' averayge
+daily vaccination, but due to the complex situation and influencing factors behind COVID-19, we believe that long-term
+data smoothing will not necessarily be helpful for prediction. So we give up, and using a more intuitive based
+prediction.
+
+-------------------------------------------------------------------

@@ -1,0 +1,100 @@
+
+Individual report for the COMP1730/6730 project assignment S1 2022
+-------------------------------------------------------------------
+
+Question 1: Write your name and ANU ID
+
+Hao Xu
+u7154495
+
+-------------------------------------------------------------------
+
+Question 2: If you are part of a group, write the ANU IDs of ALL
+members of this group. If you are doing the assignment on your own
+(not part of a group), just write "not part of a group".
+
+u7166705
+u7154495
+u7326008
+
+-------------------------------------------------------------------
+
+Question 3: Select a piece of code in your assignment solution that
+you have written, and explain:    
+
+# The following code I choose to explain is copied from assignment.py line 235
+# to line 299. I removed all comments for ease of reading
+
+def top_k(data, k, reverse=False):
+    if len(data) < 2:
+        return
+    for i in range(len(data)):
+        heap_insert(data, i)
+    # heap_size = min(k, len(data))
+    heap_size = len(data)
+    data = swap_ele(data, 0, heap_size - 1)
+    heap_size -= 1
+    while heap_size > 0:
+        heapify(data, 0, heap_size)
+        data = swap_ele(data, 0, heap_size - 1)
+        heap_size -= 1
+    k = min(k, len(data))
+    return list(reversed(data[-k:])) if reverse else data[:k]
+
+
+def swap_ele(data, pos1, pos2):
+    data[pos1], data[pos2] = data[pos2], data[pos1]
+    return data
+
+
+def heapify(data, index, heap_size):
+    left = index * 2 + 1
+    while left < heap_size:
+        largest = left + 1 if left + 1 < heap_size and data[left + 1][0] > data[left][0] else left
+        largest = largest if data[largest][0] > data[index][0] else index
+        if largest == index:
+            break
+        data = swap_ele(data, largest, index)
+        index = largest
+        left = index * 2 + 1
+
+
+def heap_insert(data, index):
+    while index > 0 and data[index][0] > data[(index - 1) // 2][0]:
+        data = swap_ele(data, index, ((index - 1) // 2))
+        index = (index - 1) // 2
+
+(a) What does this piece of code do?
+
+    This piece of code is expected to return the largest or smallest k elements of the given data
+    by applying heap sort.
+
+(b) How does it work?
+
+    The main functionality of this piece of the code is defined in the top_k() function, all other
+    functions are helper functions.
+
+    After the top_k() function receives a set of data, it will call heap_insert() for every element,
+    heap_insert() will check whether the newly inserted element is larger than its parent element, if
+    so, swap the two elements by calling swap_ele(). Repeat checking until the current element is smaller
+    than its parent element or the current element is the root element. In this way, it is guaranteed that
+    we are about to get a large root heap when the insertion is completed.
+
+    We then swap the first and last elements of the data set, and reduce the size of the heap(denoted by heap_size)
+    by one, this way we find and store the largest element, and this element will not be involved in the later
+    operations. For the first heap_size - 1 elements, we call the heapify() function to make it become a large
+    root heap again, repeat the operation of swapping elements and decreasing the size of the heap by one until
+    the size is zero. This way we have the data set in ascending order.
+
+    We can then return the largest or smallest k elements on demand.
+
+(c) What other possible ways did you consider to implement this
+functionality, and why did you choose the one you did?
+
+    The core of top_k() function is sorting, and there are many algorithms can be used to sort a data set, such as
+    bubble sort, quick sort, merge sort and etc. We must consider the time complexity of the sorting algorithms in
+    the average and worst case. Some good sorting algorithms perform poorly in extreme cases, for example, the time
+    complexity of quick sort is O(n^2) in the worst case. Taking this into consideration we found that heap sort is
+    a algorithm that has stable performance(O(n log(n))	for both average and worst case) and easy to be implemented.
+
+-------------------------------------------------------------------

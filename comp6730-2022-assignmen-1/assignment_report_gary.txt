@@ -1,0 +1,83 @@
+
+Individual report for the COMP1730/6730 project assignment S1 2022
+-------------------------------------------------------------------
+
+Question 1: Write your name and ANU ID
+
+Your name is Gary Chen (Guanyin Chen)
+Your ID U7326008
+
+-------------------------------------------------------------------
+
+Question 2: If you are part of a group, write the ANU IDs of ALL
+members of this group. If you are doing the assignment on your own
+(not part of a group), just write "not part of a group".
+
+u7166705
+u7154495
+u7326008
+
+-------------------------------------------------------------------
+Question 3: Select a piece of code in your assignment solution that
+you have written, and explain:
+    I choose the part from line 30-60 in the main file
+    this is helper function from line 308 to 318
+
+    def unique_country(data, cols):
+    unique_country_data1 = [row for row in data if "OWID_" not in row[cols['iso_code']]
+    return unique_country_data1
+
+    this is  helper functions in python file 353-365
+    def count_data(list_of_col):
+    total = 0
+    for list_number in list_of_col:
+        # check is a number or not
+        if isinstance(list_number, int) or list_number.isdigit():
+            # adding the element to the total
+            total += int(list_number)
+    return total
+
+(a) What does this piece of code do?
+
+Question 1 is to calculate the number of data in the CSV by using python.
+This piece not only can count the number of locations and number of countries in the CSV but also can calculate the Total vaccine doses, and the total population fully or partly vaccinated.
+In order to make this part user and reader-friendly, I defined helper functions count_data and unique_country.
+These count_data are used to count the sum of the number in the list of strings it is used in the Q1 part c and d part to calculate the output data.
+The unique_country is mainly used in Q1 b but is also very helpful in entire tasks as this function is helpful to find the country without any regions.
+
+(b) How does it work?
+
+During question 1, his part required to calculate the sum of the location and countries.
+There are plenty of data in the given CSV file in order to find the actual data we used in the CSV, we need to count the list in different locations.
+Therefore, I use the set to sort the column that only appears once. However, in question 1 b we end to find the total countries by deleting the front part "OWID_"
+at the same time, I found the entire of this assignment required to use the list in the unique country, not the location.
+In order to make the project friendly to my group members, I wrote the unique_country function this function is to sort column B which removes the "OWID_".
+Therefore I only need to follow the method in Q1 part a in order to find the length of the list of the country only appears once.
+During the Q1 parts c and d. These two parts are required to calculate the sum data of global vaccine doses.
+To start with when I first time does part c, I tried to simply calculate the sum of the list C. However, I found the result of column C is very huge.
+Therefore, I reviewed the assignment instruction notes, and I figured out the structure of column C.
+My algorithm of parts c and d is to find the corresponding latest list data of the vaccine doses and first dose and fully vaccine people and sum these data.
+However, due to the output of the latest data being lists of strings, In order to find the corresponding data we need to figure out and calculate the number part in the list. A
+s I found not only part c, but also part d required to use of the same algorithm to calculate.
+In order to make the code compile efficiently and avoid the repetitive code, I defined the count_data to find the sum of the number in the list of strings.
+Therefore, I was only required to find the latest data list and calculate the sum of data to finish question 1.
+
+(c) What other possible ways did you consider to implement this
+functionality, and why did you choose the one you did?
+
+During question1 part a and b I assumed that every cell in the column is valid which mean not empty and the first row is the title of a column
+In question 1 parts a and b I using the uniqueness of set elements in Python to find the repetitive data.
+There's another way to find the same value by using the sorting and comparing two adjacent elements from the end in turn.
+n case of duplicate elements, python will delete them.
+Otherwise, move the pointer one bit to the left and repeat the above process
+The reason why I use the set as using the set can make the style clear and avoid long and complex codes.
+
+In question1 c and d parts have another way to find the correct answer.
+These two parts require finding the global vaccine doses which means we need to calculate the total vaccine doses in every country. I used the latest date to find the result.
+However, I think another valid way to find is to use the sorting algorithm to sort the largest vaccine value in every country and sum them.
+In this case, I used sorting the latest date and finding each country's corresponding vaccine data and sum them.
+To be honest, this sorting algorithm is more efficient than the latest algorithm as it can avoid some issues and make the code easier to go.
+However, I choose this method as we are required to modify the data by date in Questions 2 3 and 4.
+Writing a helper function once is much easier for my group member to do their job as they do not need to define the helper function again.
+
+-------------------------------------------------------------------
