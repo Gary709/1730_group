@@ -17,9 +17,9 @@ Participants
 ---------------------
 Below is the 3 partipants in this project
 
-* Jingze He - u7166705
-* Hao Xu - u7154495
-* Gary Chen - u7326008
+* Jingze He
+* Hao Xu
+* Gary Chen
 
 Main
 ---------------------
