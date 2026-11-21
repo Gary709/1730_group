@@ -3,7 +3,7 @@ Template for the COMP1730/6730 project assignment, S1 2022.
 The assignment specification is available on the course web
 site, at https://cs.anu.edu.au/courses/comp1730/assessment/project/
 
-Collaborators: u7166705, u7154495, u7326008
+Collaborators: Jingze He, Hao Xu, Gary Chen
 """
 
 

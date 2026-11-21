@@ -13,9 +13,9 @@ Question 2: If you are part of a group, write the ANU IDs of ALL
 members of this group. If you are doing the assignment on your own
 (not part of a group), just write "not part of a group".
 
-u7166705
-u7154495
-u7326008
+Jingze He
+Hao Xu
+Gary Chen
 
 -------------------------------------------------------------------
 
